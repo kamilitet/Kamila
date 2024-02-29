@@ -1,0 +1,68 @@
+---
+title: "1Užduotis"
+author: "Kamila Taučaitė"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Tvarkingas duomenų failas (tidy data)
+1. Nuskaitykite duomenų failą datasets :: WorldPhones (jame patiktas tam tikrų metų
+įvairių regionų telefonų skaičius).
+```{r}
+data = (WorldPhones)
+```
+• Apžvelkite failą datasets :: WorldPhones (kintamieji, jų tipai, eilutės). Kurie
+tvarkingo failo formato kriterijai pažeisti? Tvarkingas failas turėtų būti su stulpelių pavadinimais(Year, Region ir Telephones). Taip pat visi žemynai turėtų būti viename stulpelyje, kuris turėtų pavadinimą žemynai. Taip pat telefonų duomenys turėtų būti atskirame stulpelyje.
+```{r}
+print(class(WorldPhones)) # kintamuju tipai
+print(WorldPhones) # eilutes
+nrow(WorldPhones) # kiek yra eiluciu
+
+```
+
+• Sukurkite failo datasets :: WorldPhones kopiją ir sutvarkykite eilučių pavadinimus.
+```{r}
+data2 =data
+data2 <- c("North America", "Europe", "Asia", "Middle East", "Africa", "South America")
+
+
+
+
+```
+• Sukurkite naują kintamąjį Telephones - regiono telefonų skaičius (žr. pivot_longer)
+ir sutvarkykite duomenų failą.
+```{r}
+library(tidyr)
+data2 = data
+#Duomenų rėmelis:
+sf <- data.frame(
+  N.Amer = c(45939, 60423, 64721, 68484, 71799, 76036, 79831),
+  Europe = c(21574, 29990, 32510, 35218, 37598, 40341, 43173),
+  Asia = c(2876, 4708, 5230, 6662, 6856, 8220, 9053),
+  S.Amer = c(1815, 2568, 2695, 2845, 3000, 3145, 3338),
+  Oceania = c(1646, 2366, 2526, 2691, 2868, 3054, 3224),
+  Africa = c(89, 1411, 1546, 1663, 1769, 1905, 2005),
+  Mid.Amer = c(555, 733, 773, 836, 911, 1008, 1076)
+)
+
+# pivot_longer:
+sutvarkytasfailas <- sf %>%
+  pivot_longer(
+    cols = c(N.Amer, Europe, Asia, S.Amer, Oceania, Africa, Mid.Amer),
+    names_to = 'Region',
+    values_to = 'TELEPHONES'
+  )
+
+print(sutvarkytasfailas)
+
+
+
+
+```
+
